@@ -1,105 +1,130 @@
-EX NO 12(D): : WRITE FUNCTIONS TO PERFORM-ENQUEUE, DEQUEUE, PEEK, DISPLAY IN QUEUE USING LINKED LIST.(USE CHARACTER DATA IN QUEUE).
+EX NO 12(E): FIND PEEK ELEMENT IN QUEUE USING LINKED LIST
+
 
 AIM:
-To write a functions to perform enqueue ,dequeue,peek,display in Queue using linked list.
+To write a program to find the peek (front) element in a queue implemented using a linked list.
 
 
 ALGORITHM:
-1. Start.
-2. Define a variables.
-3. Write a functions to perform enqueue, dequeue,peek,display, in Queue using linked
-list.
-4. Read the value using scanf.
-5. Ask the user to make an input.
-6. Print out the answer.
-7. End
+1.Start.
+2.Define the structure for a queue node.
+3.Create functions for enqueue and peek.
+4.In enqueue(), add an element to the rear of the queue.
+5.In peek(), return the element at the front of the queue.
+6.Accept user input to perform operations.
+7.End.
+
+
 
 PROGRAM:
-struct Node
-{
-char data;
-struct Node *next;
-}*front=NULL,*rear=NULL;
-void enqueue(char data)
-{
-struct Node *n=(struct Node*)malloc(sizeof(struct Node));
-n->data=data;
-n->next=NULL;
-if(front==NULL)
-{
-front=rear=n;
-}
-else
-{
-rear->next=n;
-rear=n;
-}
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define structure for a node
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* front = NULL;
+struct Node* rear = NULL;
+
+void enqueue(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (rear == NULL) {
+        front = rear = newNode;
+    } else {
+        rear->next = newNode;
+        rear = newNode;
+    }
+    printf("%d enqueued to queue\n", value);
 }
 
-Void display()
-{
-struct Node *temp;
-temp=front;
-if(temp==NULL)
-{
-printf("queue elements:\n");
+void peek() {
+    if (front == NULL)
+        printf("Queue is Empty\n");
+    else
+        printf("Peek element: %d\n", front->data);
 }
-else
-{
-printf("queue elements:\n");
-while(temp!=NULL)
-{
-printf("%c\n",temp->data);
-temp=temp->next;
+
+void display() {
+    struct Node* temp = front;
+    if (temp == NULL) {
+        printf("Queue is Empty\n");
+        return;
+    }
+    printf("Queue elements: ");
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
 }
+
+int main() {
+    int choice, value;
+
+    do {
+        printf("\n1. Enqueue\n2. Peek\n3. Display\n4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter value to enqueue: ");
+                scanf("%d", &value);
+                enqueue(value);
+                break;
+            case 2:
+                peek();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid Choice!\n");
+        }
+    } while (choice != 4);
+
+    return 0;
 }
-}
-void dequeue()
-{
-struct Node *temp;
-temp=front;
-if(temp==NULL)
-{
-printf("queue is empty\n");
-}
-else
-{
-front=temp->next;
-free(temp);
-}
-}
-void peek(){
-printf("peek:");
-printf("%c\n",front-
->data);}
 
 
-TEST:
-front=NULL;
-rear=NULL;
-enqueue('R');
-enqueue('A');
-enqueue('V');
-enqueue('I');
-display();
-peek();
-dequeue();
-dequeue();
-display();
-peek();
+
+INPUT:
+1
+10
+1
+20
+2
+3
+4
+
 
 
 OUTPUT:
-queue elements:
-R
-A
-V
-I
-peek:R
-queue elements:
-V
-I
-peek:V
+Enter your choice: 1
+Enter value to enqueue: 10
+10 enqueued to queue
+
+Enter your choice: 1
+Enter value to enqueue: 20
+20 enqueued to queue
+
+Enter your choice: 2
+Peek element: 10
+
+Enter your choice: 3
+Queue elements: 10 20
+
+Enter your choice: 4
+Exiting...
 
 
 RESULT:
